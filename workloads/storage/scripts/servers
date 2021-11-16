@@ -1,0 +1,7 @@
+[servers]
+172.30.220.196
+172.30.220.133
+
+[servers:vars]
+ansible_user=root
+ansible_ssh_pass=password

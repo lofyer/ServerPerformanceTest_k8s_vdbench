@@ -1,0 +1,15 @@
+---
+- name: Get the total number of op/s
+  block:
+    - name: Copy getops.py to remote
+      copy:
+        src: "{{ memtier_getops_file }}"
+        dest: "{{ memtier_getops_file_dest }}"
+
+    - name: Run getops.py to get result
+      shell: '{{ pythonbin }} {{ memtier_getops_file_dest }} {{ local_temp }}/result-{{ memtier_pods }}-{{ memtier_iter_no }} {{ memtier_pods }}'
+      register: result
+
+    - debug: msg="{{ result.stdout_lines }}"
+      when: debug_mode | bool
+  run_once: true

@@ -1,0 +1,15 @@
+---
+- name: Delete memtier pods
+  block:
+    - name: Run kubectl delete -f {{ memtier_yaml_file_dest }}
+      command: kubectl delete -f {{ memtier_yaml_file_dest }}
+      register: result
+
+    - debug: msg="{{ result.stdout_lines }}"
+      when: debug_mode | bool
+
+    - name: Remove {{ memtier_yaml_file_dest }}
+      file:
+        path="{{ memtier_yaml_file_dest }}"
+        state=absent
+  run_once: true
